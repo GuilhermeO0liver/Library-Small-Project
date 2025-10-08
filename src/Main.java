@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);
         Library library = new Library("Rowan");
 
         System.out.println("Welcome to the " + library.getName() + " Library");
@@ -10,11 +11,10 @@ public class Main {
         System.out.println("What do you want to do?");
         Thread.sleep(1000);
 
-        SearchForInput(library);
+        SearchForInput(library, scanner);
     }
 
-    public static void SearchForInput(Library library) throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
+    public static void SearchForInput(Library library, Scanner scanner) throws InterruptedException {
 
         boolean AnswerValid = false;
         String Response;
@@ -87,7 +87,7 @@ public class Main {
                 String response = scanner.nextLine();
                 if (response.equalsIgnoreCase("Y")){
                     System.out.println("What Information do you want to change?");
-                    changeBookInfo(library, book_name);
+                    changeBookInfo(library, book_name, scanner);
 
                     answerValid = true;
                 } else if (response.equalsIgnoreCase("N")) {
@@ -109,7 +109,7 @@ public class Main {
             System.out.println("Do you want to continue to search in the Library?: Y/N");
             String response = scanner.nextLine();
             if (response.equalsIgnoreCase("Y")){
-                SearchForInput(library);
+                SearchForInput(library, scanner);
 
                 answerValid = true;
             } else if (response.equalsIgnoreCase("N")) {
@@ -123,11 +123,9 @@ public class Main {
 
             Thread.sleep(1000);
         } while(!answerValid);
-        scanner.close();
     }
 
-    public static void changeBookInfo(Library library, String book_name){
-        Scanner scanner = new Scanner(System.in);
+    public static void changeBookInfo(Library library, String book_name, Scanner scanner){
         String response;
         boolean validAnswer = false;
         do {
@@ -158,22 +156,21 @@ public class Main {
             library.changeBookAuthor(book_name, newBookAuthor);
         }
         else if (response.equalsIgnoreCase("I")){
-            System.out.println("Input the Availability:  true/false");
-            String Available = scanner.nextLine();
-            boolean newBookAvailability;
+
+            boolean newBookAvailability = false;
             boolean ValidAnswer = false;
             do {
                 System.out.println("Input the Availability:  true/false");
-                if (Available.equalsIgnoreCase("true") ||
-                        Available.equalsIgnoreCase("false")){
+                String availableInput = scanner.nextLine();
+                if (availableInput.equalsIgnoreCase("true") ||
+                        availableInput.equalsIgnoreCase("false")){
+                    newBookAvailability = availableInput.equalsIgnoreCase("true");
                     ValidAnswer = true;
                 } else {
-                    System.out.println("ERROR : Input invalid");
+                    System.out.println("ERROR : Input invalid. Please enter 'true' or 'false'");
                 }
             }
             while (!ValidAnswer);
-
-            newBookAvailability = Available.equalsIgnoreCase("true");
             library.changeBookAvailable(book_name, newBookAvailability);
         }
     }
