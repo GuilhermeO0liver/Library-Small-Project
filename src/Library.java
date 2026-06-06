@@ -16,7 +16,6 @@ public class Library {
 
     public List<Book> getBooks() {
         if (books.isEmpty()){
-            System.out.println("This book currently don't exist in the Library");
             return null;
         }
         return books;

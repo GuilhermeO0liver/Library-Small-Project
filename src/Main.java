@@ -4,19 +4,17 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        Library library = new Library("Rowan");
+        Library library = new Library("Guilherme's");
 
         System.out.println("Welcome to the " + library.getName() + " Library");
-        Thread.sleep(1000);
         System.out.println("What do you want to do?");
-        Thread.sleep(1000);
 
         SearchForInput(library, scanner);
     }
 
     public static void SearchForInput(Library library, Scanner scanner) throws InterruptedException {
 
-        boolean AnswerValid = false;
+        boolean AnswerValid;
         String Response;
 
         do{
@@ -35,6 +33,7 @@ public class Main {
                 AnswerValid = true;
             } else {
                 System.out.println("ERROR: invalid Input. Please try again.");
+                AnswerValid = false;
             }
         } while (!AnswerValid);
 
@@ -74,14 +73,14 @@ public class Main {
 
 
         }
+
         // make that you can change the book title, author and if is available
         else if (Response.equalsIgnoreCase("S")) {
             System.out.println("Type the name of the book: ");
             String book_name = scanner.nextLine();
             library.showSingleBookInfo(book_name);
 
-
-            boolean answerValid = false;
+            boolean answerValid;
             do {
                 System.out.println("Do you want to change the book info?: Y/N");
                 String response = scanner.nextLine();
@@ -94,6 +93,7 @@ public class Main {
                     answerValid = true;
                 } else {
                     System.out.println("ERROR: Input not supported");
+                    answerValid = false;
                 }
 
             } while(!answerValid);
@@ -127,7 +127,7 @@ public class Main {
 
     public static void changeBookInfo(Library library, String book_name, Scanner scanner){
         String response;
-        boolean validAnswer = false;
+        boolean validAnswer;
         do {
 
             System.out.println("Press T to change the Title");
@@ -141,6 +141,7 @@ public class Main {
                 validAnswer = true;
             } else {
                 System.out.println("ERROR : Input invalid");
+                validAnswer = false;
             }
 
         } while(!validAnswer);
@@ -158,7 +159,7 @@ public class Main {
         else if (response.equalsIgnoreCase("I")){
 
             boolean newBookAvailability = false;
-            boolean ValidAnswer = false;
+            boolean ValidAnswer;
             do {
                 System.out.println("Input the Availability:  true/false");
                 String availableInput = scanner.nextLine();
@@ -168,6 +169,7 @@ public class Main {
                     ValidAnswer = true;
                 } else {
                     System.out.println("ERROR : Input invalid. Please enter 'true' or 'false'");
+                    ValidAnswer = false;
                 }
             }
             while (!ValidAnswer);
