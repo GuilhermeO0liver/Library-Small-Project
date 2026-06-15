@@ -16,9 +16,6 @@ public class Library {
     }
 
     public List<Book> getBooks() {
-        if (books.isEmpty()){
-            return null;
-        }
         return books;
     }
 
@@ -49,59 +46,56 @@ public class Library {
         }
     }
 
-    public void removeBookByTitle(String book_title){
-        Book book = findBookByTitle(book_title);
+    public void removeBookByTitle(String bookTitle){
+        Book book = findBookByTitle(bookTitle);
         if (book != null) {
             books.remove(book);
             System.out.println("Book removed successfully");
         } else {
-            System.out.println("Error: No book found with title '" + book_title + "'");
+            System.out.println("Error: No book found with title '" + bookTitle + "'");
         }
     }
 
-    public void showSingleBookInfo(String book_name, Scanner scanner){
-        Book book = findBookByTitle(book_name);
+    public void showSingleBookInfo(String bookName, Scanner scanner){
+        Book book = findBookByTitle(bookName);
         if (book != null){
-            book.showInfo();
+            System.out.println(book);
             System.out.println("Do you want to change the book info?: Y/N");
             String response = scanner.nextLine();
             if (response.equalsIgnoreCase("Y")) {
                 System.out.println("What Information do you want to change?");
-                changeBookInfo(book_name, scanner);
+                changeBookInfo(bookName, scanner);
             }
         } else {
             System.out.println("Book not found");
         }
     }
 
-    public void changeBookTitle(String bookName, String newBookTitle){
+    public boolean changeBookTitle(String bookName, String newBookTitle){
         Book book = findBookByTitle(bookName);
-        if (book != null){
-            book.setTitle(newBookTitle);
-            System.out.println("Title updated successfully");
-        } else {
-            System.out.println("Error: No book found with title '" + bookName + "'");
+        if (book == null){
+            return false;
         }
+        book.setTitle(newBookTitle);
+        return true;
     }
 
-    public void changeBookAuthor(String bookName, String newBookAuthor){
+    public boolean changeBookAuthor(String bookName, String newBookAuthor){
         Book book = findBookByTitle(bookName);
-        if (book != null){
-            book.setAuthor(newBookAuthor);
-            System.out.println("Author updated successfully");
-        } else {
-            System.out.println("Error: No book found with title '" + bookName + "'");
+        if (book == null){
+            return false;
         }
+        book.setAuthor(newBookAuthor);
+        return true;
     }
 
-    public void changeBookAvailable(String bookName, Boolean newAvailable){
+    public boolean changeBookAvailable(String bookName, Boolean newAvailable){
         Book book = findBookByTitle(bookName);
-        if (book != null){
-            book.setAvailable(newAvailable);
-            System.out.println("Availability updated successfully");
-        } else {
-            System.out.println("Error: No book found with title '" + bookName + "'");
+        if (book == null){
+            return false;
         }
+        book.setAvailable(newAvailable);
+        return true;
     }
 
     public void changeBookInfo(String bookName, Scanner scanner){
@@ -128,12 +122,20 @@ public class Library {
         if (response.equalsIgnoreCase("T")){
             System.out.println("Input the new name: ");
             String newBookTitle = scanner.nextLine();
-            changeBookTitle(bookName, newBookTitle);
+            if (changeBookTitle(bookName, newBookTitle)){
+                System.out.println("Book Title has been changed successfully");
+            } else  {
+                System.out.println("Error: Input invalid");
+            }
         }
         else if (response.equalsIgnoreCase("A")){
             System.out.println("Input the new Author: ");
             String newBookAuthor = scanner.nextLine();
-            changeBookAuthor(bookName, newBookAuthor);
+            if (changeBookAuthor(bookName, newBookAuthor)){
+                System.out.println("Book Author has been changed successfully");
+            } else  {
+                System.out.println("ERROR : Input invalid");
+            }
         }
         else if (response.equalsIgnoreCase("I")){
 
@@ -152,7 +154,11 @@ public class Library {
                 }
             }
             while (!validAnswer);
-            changeBookAvailable(bookName, newBookAvailability);
+            if (changeBookAvailable(bookName, newBookAvailability)){
+                System.out.println("Book Availability has been changed successfully");
+            } else   {
+                System.out.println("ERROR : Input invalid");
+            }
         }
     }
 

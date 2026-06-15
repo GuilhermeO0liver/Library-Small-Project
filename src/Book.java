@@ -6,12 +6,10 @@ public class Book {
     private final long ISBN;
     private boolean isAvailable;
 
-    Random random = new Random();
-
     public Book(String title, String author, boolean isAvailable){
         this.title = title;
         this.author = author;
-        ISBN = random.nextLong(100000000000L, 999999999999L);
+        ISBN = new Random().nextLong(100000000000L, 999999999999L);
         this.isAvailable = isAvailable;
     }
 
@@ -39,10 +37,13 @@ public class Book {
         isAvailable = available;
     }
 
-    public void showInfo(){
-        System.out.println("Title: "+ this.title);
-        System.out.println("Author: "+ this.author);
-        System.out.println("ISBN: "+ this.ISBN);
-        System.out.println("Available: "+ this.isAvailable);
+    public long getISBN() {
+        return ISBN;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + "\nAuthor: " + author +
+                "\nISBN: " + ISBN + "\nAvailable: " + isAvailable;
     }
 }
