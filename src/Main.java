@@ -14,8 +14,8 @@ public class Main {
 
     public static void SearchForInput(Library library, Scanner scanner) throws InterruptedException {
 
-        boolean AnswerValid;
-        String Response;
+        boolean answerValid;
+        String response;
 
         do{
 
@@ -24,20 +24,20 @@ public class Main {
             System.out.println("Press D to delete a book");
             System.out.println("Press S to search a singular book");
 
-            Response = scanner.nextLine();
+            response = scanner.nextLine();
 
-            if (Response.equalsIgnoreCase("B") ||
-                    Response.equalsIgnoreCase("A") ||
-                    Response.equalsIgnoreCase("D") ||
-                    Response.equalsIgnoreCase("S")){
-                AnswerValid = true;
+            if (response.equalsIgnoreCase("B") ||
+                    response.equalsIgnoreCase("A") ||
+                    response.equalsIgnoreCase("D") ||
+                    response.equalsIgnoreCase("S")){
+                answerValid = true;
             } else {
                 System.out.println("ERROR: invalid Input. Please try again.");
-                AnswerValid = false;
+                answerValid = false;
             }
-        } while (!AnswerValid);
+        } while (!answerValid);
 
-        if (Response.equalsIgnoreCase("B")){
+        if (response.equalsIgnoreCase("B")){
             if (library.getBooks() == null){
                 System.out.println("There is no books currently in the library");
             }
@@ -50,23 +50,23 @@ public class Main {
 
         }
 
-        else if (Response.equalsIgnoreCase("A")) {
+        else if (response.equalsIgnoreCase("A")) {
             System.out.println("What book do you want to add: ");
-            String book_name = scanner.nextLine();
+            String bookName = scanner.nextLine();
             System.out.println("Who is the author of the book that you want to add: ");
-            String book_author = scanner.nextLine();
-            Book book_add = new Book(book_name, book_author, true);
-            library.addBook(book_add);
+            String bookAuthor = scanner.nextLine();
+            Book bookAdd = new Book(bookName, bookAuthor, true);
+            library.addBook(bookAdd);
 
             Thread.sleep(1000);
 
         }
 
-        else if (Response.equalsIgnoreCase("D")) {
+        else if (response.equalsIgnoreCase("D")) {
             System.out.println("What is the title of the book you want to remove: ");
             library.showEachBook();
-            String book_title = scanner.nextLine();
-            library.removeBookByTitle(book_title);
+            String bookTitle = scanner.nextLine();
+            library.removeBookByTitle(bookTitle);
 
             Thread.sleep(1000);
 
@@ -75,39 +75,19 @@ public class Main {
         }
 
         // make that you can change the book title, author and if is available
-        else if (Response.equalsIgnoreCase("S")) {
+        else if (response.equalsIgnoreCase("S")) {
             System.out.println("Type the name of the book: ");
-            String book_name = scanner.nextLine();
-            library.showSingleBookInfo(book_name);
-
-            boolean answerValid;
-            do {
-                System.out.println("Do you want to change the book info?: Y/N");
-                String response = scanner.nextLine();
-                if (response.equalsIgnoreCase("Y")){
-                    System.out.println("What Information do you want to change?");
-                    changeBookInfo(library, book_name, scanner);
-
-                    answerValid = true;
-                } else if (response.equalsIgnoreCase("N")) {
-                    answerValid = true;
-                } else {
-                    System.out.println("ERROR: Input not supported");
-                    answerValid = false;
-                }
-
-            } while(!answerValid);
-
-
-
+            String bookName = scanner.nextLine();
+            library.showSingleBookInfo(bookName, scanner);
 
             Thread.sleep(1000);
 
         }
-        boolean answerValid = false;
+        answerValid = false;
+
         do {
             System.out.println("Do you want to continue to search in the Library?: Y/N");
-            String response = scanner.nextLine();
+            response = scanner.nextLine();
             if (response.equalsIgnoreCase("Y")){
                 SearchForInput(library, scanner);
 
@@ -125,56 +105,6 @@ public class Main {
         } while(!answerValid);
     }
 
-    public static void changeBookInfo(Library library, String book_name, Scanner scanner){
-        String response;
-        boolean validAnswer;
-        do {
 
-            System.out.println("Press T to change the Title");
-            System.out.println("Press A to change the Author");
-            System.out.println("Press I to change the Availability");
-            response = scanner.nextLine().trim();
-
-            if (response.equalsIgnoreCase("T") ||
-                    response.equalsIgnoreCase("A") ||
-                    response.equalsIgnoreCase("I")){
-                validAnswer = true;
-            } else {
-                System.out.println("ERROR : Input invalid");
-                validAnswer = false;
-            }
-
-        } while(!validAnswer);
-
-        if (response.equalsIgnoreCase("T")){
-            System.out.println("Input the new name: ");
-            String newBookTitle = scanner.nextLine();
-            library.changeBookTitle(book_name, newBookTitle);
-        }
-        else if (response.equalsIgnoreCase("A")){
-            System.out.println("Input the new Author: ");
-            String newBookAuthor = scanner.nextLine();
-            library.changeBookAuthor(book_name, newBookAuthor);
-        }
-        else if (response.equalsIgnoreCase("I")){
-
-            boolean newBookAvailability = false;
-            boolean ValidAnswer;
-            do {
-                System.out.println("Input the Availability:  true/false");
-                String availableInput = scanner.nextLine();
-                if (availableInput.equalsIgnoreCase("true") ||
-                        availableInput.equalsIgnoreCase("false")){
-                    newBookAvailability = availableInput.equalsIgnoreCase("true");
-                    ValidAnswer = true;
-                } else {
-                    System.out.println("ERROR : Input invalid. Please enter 'true' or 'false'");
-                    ValidAnswer = false;
-                }
-            }
-            while (!ValidAnswer);
-            library.changeBookAvailable(book_name, newBookAvailability);
-        }
-    }
 
 }
